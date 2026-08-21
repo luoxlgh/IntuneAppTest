@@ -1,12 +1,9 @@
-﻿function Test-CommandExists {
-    param([string]$cmd)
-    return [bool](Get-Command $cmd -ErrorAction SilentlyContinue)
+﻿$dotnetInstalled = [bool](Get-Command dotnet -ErrorAction SilentlyContinue)
+$gitInstalled    = [bool](Get-Command git    -ErrorAction SilentlyContinue)
+
+if ($dotnetInstalled -and $gitInstalled) {
+    Write-Host "Detected: dotnet and git are installed"
+    exit 0
 }
 
-if ((Test-CommandExists "dotnet") -and 
-    (Test-CommandExists "git")) {
-    Write-Output "Git and dotnet were installed"
-    exit 0
-} else {
-    exit 1
-}
+exit 1
