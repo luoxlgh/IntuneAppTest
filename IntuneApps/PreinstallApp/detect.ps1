@@ -1,7 +1,8 @@
-﻿$gitInstalled    = [bool](Get-Command git    -ErrorAction SilentlyContinue)
+﻿$dotnetInstalled = [bool](Get-Command dotnet -ErrorAction SilentlyContinue)
+$gitInstalled    = [bool](Get-Command git    -ErrorAction SilentlyContinue)
 
-if ($gitInstalled) {
-    Write-Host "Detected: git is installed"
+if ($dotnetInstalled -and $gitInstalled) {
+    Write-Host "Detected: dotnet and git are installed"
     exit 0
 }
 
