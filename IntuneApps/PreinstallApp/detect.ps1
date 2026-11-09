@@ -1,9 +1,14 @@
-﻿$dotnetInstalled = [bool](Get-Command dotnet -ErrorAction SilentlyContinue)
-$gitInstalled    = [bool](Get-Command git    -ErrorAction SilentlyContinue)
+﻿$env:Path = @(
+    [Environment]::GetEnvironmentVariable('Path', 'Machine')
+    [Environment]::GetEnvironmentVariable('Path', 'User')
+) -join ';'
 
-if ($dotnetInstalled -and $gitInstalled) {
-    Write-Host "Detected: dotnet and git are installed"
-    exit 0
+$dotnet = Get-Command dotnet.exe -CommandType Application -ErrorAction SilentlyContinue
+$git = Get-Command git.exe -CommandType Application -ErrorAction SilentlyContinue
+
+if (-not $dotnet -or -not $git) {
+    exit 1
 }
 
-exit 1
+Write-Output 'Detected: dotnet and git'
+exit 0
